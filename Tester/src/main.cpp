@@ -1,11 +1,10 @@
-#include<GamEn.h>
+#include <GamEn.h>
 
 class Tester : public GamEn::Manager
 {
 public:
 	Tester()
 	{
-
 	}
 };
 

@@ -15,8 +15,13 @@ project "GamEn"
 	location "GamEn"
 	kind "SharedLib"
 	language "C++"
+
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-tmp/" .. outputdir .. "/%{prj.name}")
+
+	pchheader "GE_pch.h"
+	pchsource "GamEn/src/GE_pch.cpp"  -- tell VS compiler only
+
 	files
 	{
 		"%{prj.name}/src/**.h",
@@ -24,7 +29,8 @@ project "GamEn"
 	}
 	includedirs
 	{
-		"%{prj.name}/module/spdlog/include"
+		"%{prj.name}/module/spdlog/include",
+		"%{prj.name}/src"
 	}
 
 	filter "system:windows"

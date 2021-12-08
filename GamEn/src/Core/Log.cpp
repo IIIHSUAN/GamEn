@@ -1,3 +1,4 @@
+#include "GE_pch.h"
 #include "Log.h"
 
 namespace GamEn {

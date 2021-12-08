@@ -1,5 +1,5 @@
+#include "GE_pch.h"
 #include "Manager.h"
-#include <iostream>
 
 namespace GamEn {
 
@@ -14,6 +14,7 @@ namespace GamEn {
 
 	void Manager::run()
 	{
+
 		system("pause");
 	}
 }
