@@ -1,0 +1,18 @@
+# Directories
+Hazel/vendor/VulkanSDK
+Hazelnut/assets/cache
+scripts/__pycache__
+
+# Binaries
+**/bin/
+bin-int/
+
+# Files
+*.log
+
+# Visual Studio
+.vs/
+**.sln
+**.vcxproj
+**.vcxproj.filters
+**.vcxproj.user
