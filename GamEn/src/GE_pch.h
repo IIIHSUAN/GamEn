@@ -11,6 +11,8 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include "Core/Log.h"
+
 #ifdef GE_PLATFORM_WIN
 	#include <Windows.h>
 #endif
