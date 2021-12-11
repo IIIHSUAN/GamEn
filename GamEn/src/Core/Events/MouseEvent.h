@@ -42,8 +42,8 @@ namespace GamEn {
 			return ss.str();
 		}
 
-		EVENT_CLASS_TYPE(MouseMoved)
-		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+		EVENT_TYPE_MACRO_FUNC(MouseMoved)
+		EVENT_CATEGORY_MACRO_FUNC(EventCategoryMouse | EventCategoryInput)
 	private:
 		float _mouseX, _mouseY;
 	};
@@ -64,8 +64,8 @@ namespace GamEn {
 			return ss.str();
 		}
 
-		EVENT_CLASS_TYPE(MouseScrolled)
-		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+		EVENT_TYPE_MACRO_FUNC(MouseScrolled)
+		EVENT_CATEGORY_MACRO_FUNC(EventCategoryMouse | EventCategoryInput)
 	private:
 		float _offsetX, _offsetY;
 	};
@@ -75,7 +75,7 @@ namespace GamEn {
 	public:
 		MouseCode GetMouseButton() const { return _mouseBotton; }
 
-		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput | EventCategoryMouseButton)
+		EVENT_CATEGORY_MACRO_FUNC(EventCategoryMouse | EventCategoryInput | EventCategoryMouseButton)
 	protected:
 		MouseButtonEvent(const MouseCode button)
 			: _mouseBotton(button) {}
@@ -96,7 +96,7 @@ namespace GamEn {
 			return ss.str();
 		}
 
-		EVENT_CLASS_TYPE(MouseButtonPressed)
+		EVENT_TYPE_MACRO_FUNC(MouseButtonPressed)
 	};
 
 	class GE_API MouseButtonReleasedEvent : public MouseButtonEvent
@@ -112,7 +112,7 @@ namespace GamEn {
 			return ss.str();
 		}
 
-		EVENT_CLASS_TYPE(MouseButtonReleased)
+		EVENT_TYPE_MACRO_FUNC(MouseButtonReleased)
 	};
 
 }

@@ -2,7 +2,8 @@
 
 #include "Core.h"
 #include "Window/Window.h"
-
+#include "Core/Events/Event.h"
+#include "Core/Layers/LayerStack.h"
 
 namespace GamEn {
 
@@ -15,14 +16,17 @@ namespace GamEn {
 		void run();
 		void onEvent(Event& e);
 
+		void layer_push_front(Layer* layer);
+		void layer_push_back(Layer* layer);
 	private:
 		bool onWindowClose(WindowCloseEvent& e);
 		bool onWindowResize(WindowResizeEvent& e);
 
 		std::unique_ptr<Window> _window;
 		bool _isRun = true;
+		LayerStack _layerStack;
 	};
 
-	Manager* init();  //defined in application
+	Manager* create();  //define in application
 
 }

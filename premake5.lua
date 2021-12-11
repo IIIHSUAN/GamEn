@@ -13,8 +13,10 @@ outputdir = "%{cfg.system}-%{cfg.architecture}-%{cfg.buildcfg}"
 
 myIncludeDir = {}
 myIncludeDir["GLFW"] = "GamEn/module/GLFW/include"
+myIncludeDir["Glad"] = "GamEn/module/Glad/include"
 
 include "GamEn/module/GLFW"  --GLFW project
+include "GamEn/module/Glad"  --Glad project
 
 project "GamEn"
     location "GamEn"
@@ -36,11 +38,13 @@ project "GamEn"
     {
         "%{prj.name}/module/spdlog/include",
         "%{prj.name}/src",
-        "%{myIncludeDir.GLFW}"
+        "%{myIncludeDir.GLFW}",
+        "%{myIncludeDir.Glad}"
     }
     links
     {
         "GLFW",
+        "Glad",
         "opengl32.lib"
     }
 
@@ -52,7 +56,6 @@ project "GamEn"
         {
             "GE_PLATFORM_WIN",
             "GE_BUILD_DLL"
-            -- _WINDLL;_UNICODE;UNICODE;
         }
         postbuildcommands
         {
@@ -61,12 +64,15 @@ project "GamEn"
 
     filter "configurations:Debug"
         defines "GE_DEBUG"
+        buildoptions "/MDd"
         symbols "on"
     filter "configurations:Release"
         defines "GE_Release"
+        buildoptions "/MD"
         optimize "on"
     filter "configurations:Distribute"
         defines "GE_Distribute"
+        buildoptions "/MD"
         optimize "on"
 
 
@@ -103,10 +109,13 @@ project "Tester"
 
     filter "configurations:Debug"
         defines "GE_DEBUG"
+        buildoptions "/MDd"
         symbols "on"
     filter "configurations:Release"
         defines "GE_Release"
+        buildoptions "/MD"
         optimize "on"
     filter "configurations:Distribute"
         defines "GE_Distribute"
+        buildoptions "/MD"
         optimize "on"

@@ -10,6 +10,7 @@
 
 #else
 #error ONLY RUNS ON WINDOWS ONLY
+
 #endif
 
 #define BIT(x) (1<<x)

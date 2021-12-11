@@ -147,7 +147,7 @@ namespace GamEn {
 	{
 	public:
 		KeyCode GetKeyCode() const { return _keyCode; }
-		EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
+		EVENT_CATEGORY_MACRO_FUNC(EventCategoryKeyboard | EventCategoryInput)
 	protected:
 		KeyEvent(const KeyCode keycode)
 			: _keyCode(keycode) {}
@@ -170,7 +170,7 @@ namespace GamEn {
 			return ss.str();
 		}
 
-		EVENT_CLASS_TYPE(KeyPressed)
+		EVENT_TYPE_MACRO_FUNC(KeyPressed)
 	private:
 		uint16_t _repeatCount;
 	};
@@ -187,7 +187,7 @@ namespace GamEn {
 			return ss.str();
 		}
 
-		EVENT_CLASS_TYPE(KeyReleased)
+		EVENT_TYPE_MACRO_FUNC(KeyReleased)
 	};
 	class GE_API KeyTypedEvent : public KeyEvent
 	{
@@ -202,6 +202,6 @@ namespace GamEn {
 			return ss.str();
 		}
 
-		EVENT_CLASS_TYPE(KeyTyped)
+		EVENT_TYPE_MACRO_FUNC(KeyTyped)
 	};
 }

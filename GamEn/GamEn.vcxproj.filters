@@ -7,11 +7,17 @@
     <Filter Include="Core\Events">
       <UniqueIdentifier>{52201B74-BED5-9369-47CA-8D40B37E8A6D}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Window">
-      <UniqueIdentifier>{5581319D-C136-AA92-4A2B-A469B6DFA096}</UniqueIdentifier>
+    <Filter Include="Core\Layers">
+      <UniqueIdentifier>{2D0BFE82-99C0-7678-22B5-704F8E696D7C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Window\Win">
-      <UniqueIdentifier>{B26927F2-1EF5-94B6-2706-18AB9310F1B6}</UniqueIdentifier>
+    <Filter Include="Window">
+      <UniqueIdentifier>{3DEA79DA-298C-A4B0-1247-B804FE872B01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Window\Lin">
+      <UniqueIdentifier>{CFD7C9FD-BB8F-0B4B-2497-E4A6106EA63B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Window\Win">
+      <UniqueIdentifier>{9A06CAFD-86BE-0B4B-EFC5-E4A6DB9CA63B}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -33,31 +39,52 @@
     <ClInclude Include="src\Core\Events\MouseEvent.h">
       <Filter>Core\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\Layers\Layer.h">
+      <Filter>Core\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Layers\LayerStack.h">
+      <Filter>Core\Layers</Filter>
+    </ClInclude>
     <ClInclude Include="src\Core\Log.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Manager.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Window\Win\Win_Window.h">
-      <Filter>Core\Window\Win</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Window\Window.h">
-      <Filter>Core\Window</Filter>
-    </ClInclude>
     <ClInclude Include="src\GE_pch.h" />
     <ClInclude Include="src\GamEn.h" />
+    <ClInclude Include="src\Window\Lin\Lin_Window.h">
+      <Filter>Window\Lin</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Window\Win\Win_Window.h">
+      <Filter>Window\Win</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Window\Window.h">
+      <Filter>Window</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\Layers\Layer.cpp">
+      <Filter>Core\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Layers\LayerStack.cpp">
+      <Filter>Core\Layers</Filter>
+    </ClCompile>
     <ClCompile Include="src\Core\Log.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Manager.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Window\Win\Win_Window.cpp">
-      <Filter>Core\Window\Win</Filter>
-    </ClCompile>
     <ClCompile Include="src\GE_pch.cpp" />
+    <ClCompile Include="src\Window\Lin\Lin_WIndow.cpp">
+      <Filter>Window\Lin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Window\Win\Win_Window.cpp">
+      <Filter>Window\Win</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Window\Window.cpp">
+      <Filter>Window</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

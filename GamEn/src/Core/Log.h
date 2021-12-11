@@ -9,6 +9,7 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #pragma warning(pop)
 
+#define CC(x) { std::cout<<x<<'\n'; }
 
 #define CC_ERR(...) ::GamEn::Log::getCoreLogger()->error(__VA_ARGS__)
 #define CC_TRACE(...) ::GamEn::Log::getCoreLogger()->trace(__VA_ARGS__)
@@ -21,7 +22,6 @@
 #define LOG_WARN(...) ::GamEn::Log::getClientLogger()->warn(__VA_ARGS__) 
 #define LOG_INFO(...) ::GamEn::Log::getClientLogger()->info(__VA_ARGS__)
 #define LOG_FATAL(...) ::GamEn::Log::getClientLogger()->fatal(__VA_ARGS__)
-
 
 
 namespace GamEn {

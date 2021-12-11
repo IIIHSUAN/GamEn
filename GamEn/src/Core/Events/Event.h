@@ -4,16 +4,17 @@
 
 namespace GamEn {
 
-	// current event method: blocking-event  // todo: nonblocking, queue events
+	/* current event method: blocking-event
+	 * todo: nonblocking, queue events
+	 */
 
 	// generate code
-#define EVENT_CLASS_TYPE(type) \
+#define EVENT_TYPE_MACRO_FUNC(type) \
 	static EventType getPrototype() { return EventType::type; }\
 	virtual EventType getType() const override { return getPrototype(); }\
 	virtual const char* getName() const override { return #type; }
 
-#define EVENT_CLASS_CATEGORY(category) virtual int getCategoryFlags() const override { return category; }
-
+#define EVENT_CATEGORY_MACRO_FUNC(category) virtual int getCategoryFlags() const override { return category; }
 
 	enum class EventType
 	{
@@ -38,7 +39,7 @@ namespace GamEn {
 	public:
 		virtual ~Event() = default;
 
-		bool isHandle = false;
+		bool isPropagation = true;
 
 		// override
 		virtual EventType getType() const = 0;
@@ -56,9 +57,7 @@ namespace GamEn {
 	{
 	public:
 		EventHandler(Event& event)
-			: _event(event)
-		{
-		}
+			: _event(event) {}
 
 		// Func will be deduced by the compiler
 		template<typename T, typename Func>
@@ -66,7 +65,7 @@ namespace GamEn {
 		{
 			if (_event.getType() == T::getPrototype())
 			{
-				_event.isHandle |= func(static_cast<T&>(_event));
+				_event.isPropagation |= func(static_cast<T&>(_event));
 				return true;
 			}
 			return false;

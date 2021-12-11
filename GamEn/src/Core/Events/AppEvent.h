@@ -20,8 +20,8 @@ namespace GamEn {
 			return ss.str();
 		}
 
-		EVENT_CLASS_TYPE(WindowResize)
-		EVENT_CLASS_CATEGORY(EventCategoryApplication)
+		EVENT_TYPE_MACRO_FUNC(WindowResize)
+		EVENT_CATEGORY_MACRO_FUNC(EventCategoryApplication)
 	private:
 		unsigned int _width, _height;
 	};
@@ -30,8 +30,8 @@ namespace GamEn {
 	public:
 		WindowCloseEvent() = default;
 
-		EVENT_CLASS_TYPE(WindowClose)
-		EVENT_CLASS_CATEGORY(EventCategoryApplication)
+		EVENT_TYPE_MACRO_FUNC(WindowClose)
+		EVENT_CATEGORY_MACRO_FUNC(EventCategoryApplication)
 	};
 
 	class GE_API AppTickEvent : public Event
@@ -39,23 +39,23 @@ namespace GamEn {
 	public:
 		AppTickEvent() = default;
 
-		EVENT_CLASS_TYPE(AppTick)
-		EVENT_CLASS_CATEGORY(EventCategoryApplication)
+		EVENT_TYPE_MACRO_FUNC(AppTick)
+		EVENT_CATEGORY_MACRO_FUNC(EventCategoryApplication)
 	};
 	class GE_API AppUpdateEvent : public Event
 	{
 	public:
 		AppUpdateEvent() = default;
 
-		EVENT_CLASS_TYPE(AppUpdate)
-		EVENT_CLASS_CATEGORY(EventCategoryApplication)
+		EVENT_TYPE_MACRO_FUNC(AppUpdate)
+		EVENT_CATEGORY_MACRO_FUNC(EventCategoryApplication)
 	};
 	class GE_API AppRenderEvent : public Event
 	{
 	public:
 		AppRenderEvent() = default;
 
-		EVENT_CLASS_TYPE(AppRender)
-		EVENT_CLASS_CATEGORY(EventCategoryApplication)
+		EVENT_TYPE_MACRO_FUNC(AppRender)
+		EVENT_CATEGORY_MACRO_FUNC(EventCategoryApplication)
 	};
 }

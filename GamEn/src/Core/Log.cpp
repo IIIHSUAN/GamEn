@@ -10,7 +10,7 @@ namespace GamEn {
 		_core_logger = spdlog::stdout_color_mt("GamEn");
 		_core_logger->set_level(spdlog::level::trace);
 
-		_client_logger = spdlog::stdout_color_mt("App");
+		_client_logger = spdlog::stdout_color_mt("Client");
 		_client_logger->set_level(spdlog::level::trace);
 	}
 }
