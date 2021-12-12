@@ -8,7 +8,7 @@
 
 namespace GamEn {
 
-	class Win_Window : public Window
+	class GE_API Win_Window : public Window
 	{
 	public:
 		Win_Window(const WindowProperties& props);
@@ -24,7 +24,7 @@ namespace GamEn {
 		void setVSync(bool isEnable) override;
 		bool isVSync() const override;
 
-		virtual void* GetNativeWindow() const { return _gLFWwindow; }
+		void* getNativeWindow() const { return _gLFWwindow; }
 	private:
 		virtual void init(const WindowProperties& props);
 		virtual void shutdown();

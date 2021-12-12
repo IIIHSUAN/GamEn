@@ -34,6 +34,8 @@ namespace GamEn {
 		virtual void onUpdate() = 0;
 		virtual unsigned int getWidth() const = 0;
 		virtual unsigned int getHeight() const = 0;
+		virtual void* getNativeWindow() const = 0;
+
 
 		using EventCallback = std::function<void(Event&)>;  // func pointer
 

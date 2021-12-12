@@ -10,8 +10,8 @@ namespace GamEn {
 		WindowResizeEvent(unsigned int width, unsigned int height)
 			: _width(width), _height(height) {}
 
-		unsigned int GetWidth() const { return _width; }
-		unsigned int GetHeight() const { return _height; }
+		unsigned int getWidth() const { return _width; }
+		unsigned int getHeight() const { return _height; }
 
 		std::string toString() const override
 		{

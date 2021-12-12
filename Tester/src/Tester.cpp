@@ -7,11 +7,16 @@ public:
 
 	void onUpdate() override
 	{
-		LOG_INFO("testLayer update");
+		//LOG_INFO("testLayer update");
+
+		
 	}
 	void onEvent(GamEn::Event& e) override
 	{
 		LOG_TRACE("{0}", e);
+		if (e.getType() == GamEn::EventType::KeyPressed)
+			if (GamEn::Input::isPressKey(GamEn::Key::Escape))
+				GamEn::Manager::get().stop();
 	}
 };
 
@@ -20,11 +25,11 @@ class Tester : public GamEn::Manager
 public:
 	Tester()
 	{
-		layer_push_back(new myLayer());
+		layer_push_front(new myLayer());
+		layer_push_back(new GamEn::ImguiLayer());
 	}
 	~Tester() = default;
 };
-
 
 GamEn::Manager * GamEn::create()
 {

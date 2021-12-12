@@ -4,36 +4,14 @@
 
 namespace GamEn {
 
-	using MouseCode = uint16_t;
-	namespace Mouse
-	{
-		enum : MouseCode
-		{
-			// From glfw3.h
-			Mouse0 = 0,
-			Mouse1 = 1,
-			Mouse2 = 2,
-			Mouse3 = 3,
-			Mouse4 = 4,
-			Mouse5 = 5,
-			Mouse6 = 6,
-			Mouse7 = 7,
-
-			MouseLast = Mouse7,
-			MouseLeft = Mouse0,
-			MouseRight = Mouse1,
-			MouseMiddle = Mouse2
-		};
-	}
-
 	class GE_API MouseMovedEvent : public Event
 	{
 	public:
 		MouseMovedEvent(const float mouseX, const float mouseY)
 			: _mouseX(mouseX), _mouseY(mouseY) {}
 
-		float GetX() const { return _mouseX; }
-		float GetY() const { return _mouseY; }
+		float getX() const { return _mouseX; }
+		float getY() const { return _mouseY; }
 
 		std::string toString() const override
 		{
@@ -54,13 +32,13 @@ namespace GamEn {
 		MouseScrolledEvent(const float offsetX, const float offsetY)
 			: _offsetX(offsetX), _offsetY(offsetY) {}
 
-		float GetXOffset() const { return _offsetX; }
-		float GetYOffset() const { return _offsetY; }
+		float getOffsetX() const { return _offsetX; }
+		float getOffsetY() const { return _offsetY; }
 
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "MouseScrolledEvent: (" << GetXOffset() << ',' << GetYOffset() << ')';
+			ss << "MouseScrolledEvent: (" << getOffsetX() << ',' << getOffsetY() << ')';
 			return ss.str();
 		}
 
@@ -73,7 +51,7 @@ namespace GamEn {
 	class GE_API MouseButtonEvent : public Event
 	{
 	public:
-		MouseCode GetMouseButton() const { return _mouseBotton; }
+		MouseCode getMouseButton() const { return _mouseBotton; }
 
 		EVENT_CATEGORY_MACRO_FUNC(EventCategoryMouse | EventCategoryInput | EventCategoryMouseButton)
 	protected:

@@ -87,6 +87,11 @@ namespace GamEn {
 			}
 			}
 		});
+		glfwSetCharCallback(_gLFWwindow, [](GLFWwindow* gLFWwindow, unsigned int key) {
+			WinWindowData& winWindowData = *(WinWindowData*)glfwGetWindowUserPointer(gLFWwindow);
+			KeyTypedEvent e(key);
+			winWindowData.eventCallback(e);
+		});
 		glfwSetMouseButtonCallback(_gLFWwindow, [](GLFWwindow* gLFWwindow, int button, int action, int mods) {
 			WinWindowData& winWindowData = *(WinWindowData*)glfwGetWindowUserPointer(gLFWwindow);
 			switch (action)

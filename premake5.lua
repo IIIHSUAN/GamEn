@@ -9,14 +9,19 @@ workspace "GamEn"  -- solution
         "Distribute"
     }
 
+    startproject "Tester"
+
+
 outputdir = "%{cfg.system}-%{cfg.architecture}-%{cfg.buildcfg}"
 
 myIncludeDir = {}
 myIncludeDir["GLFW"] = "GamEn/module/GLFW/include"
 myIncludeDir["Glad"] = "GamEn/module/Glad/include"
+myIncludeDir["ImGui"] = "GamEn/module/imgui"
 
-include "GamEn/module/GLFW"  --GLFW project
-include "GamEn/module/Glad"  --Glad project
+include "GamEn/module/GLFW"  -- GLFW project insert here
+include "GamEn/module/Glad"  -- Glad project
+include "GamEn/module/ImGui"  -- ImGui project
 
 project "GamEn"
     location "GamEn"
@@ -39,18 +44,20 @@ project "GamEn"
         "%{prj.name}/module/spdlog/include",
         "%{prj.name}/src",
         "%{myIncludeDir.GLFW}",
-        "%{myIncludeDir.Glad}"
+        "%{myIncludeDir.Glad}",
+        "%{myIncludeDir.ImGui}"
     }
     links
     {
         "GLFW",
         "Glad",
+        "ImGui",
         "opengl32.lib"
     }
 
     filter "system:windows"
         cppdialect "C++17"
-        staticruntime "on"
+        staticruntime "off"
         systemversion "latest"
         defines
         {
@@ -59,16 +66,16 @@ project "GamEn"
         }
         postbuildcommands
         {
-            ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Tester")
+            ("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Tester\"")  -- must build twice so bin exists
         }
 
     filter "configurations:Debug"
         defines "GE_DEBUG"
-        buildoptions "/MDd"
+        runtime "Debug"
         symbols "on"
     filter "configurations:Release"
         defines "GE_Release"
-        buildoptions "/MD"
+        runtime "Release"
         optimize "on"
     filter "configurations:Distribute"
         defines "GE_Distribute"
@@ -99,7 +106,7 @@ project "Tester"
 
     filter "system:windows"
         cppdialect "C++17"
-        staticruntime "on"
+        staticruntime "off"
         systemversion "latest"
         defines
         {
@@ -109,11 +116,11 @@ project "Tester"
 
     filter "configurations:Debug"
         defines "GE_DEBUG"
-        buildoptions "/MDd"
+        runtime "Debug"
         symbols "on"
     filter "configurations:Release"
         defines "GE_Release"
-        buildoptions "/MD"
+        runtime "Release"
         optimize "on"
     filter "configurations:Distribute"
         defines "GE_Distribute"

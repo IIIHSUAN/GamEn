@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Core.h"
+#include "Core/Core.h"
 #include "Window/Window.h"
+#include "Core/IO/Input.h"
 #include "Core/Events/Event.h"
 #include "Core/Layers/LayerStack.h"
 
@@ -14,11 +15,17 @@ namespace GamEn {
 		virtual ~Manager();
 
 		void run();
-		void onEvent(Event& e);
+		void stop() { _isRun = false; }
+		void onEvent(Event& e);  // call EventHandler & dipatch to Layers
 
 		void layer_push_front(Layer* layer);
 		void layer_push_back(Layer* layer);
+
+		inline Window& getWindow() { return (Window&)*_window; }
+		inline static Manager& get() { return *_manager; }
 	private:
+		static Manager* _manager;  // should implement one only
+
 		bool onWindowClose(WindowCloseEvent& e);
 		bool onWindowResize(WindowResizeEvent& e);
 
@@ -27,6 +34,6 @@ namespace GamEn {
 		LayerStack _layerStack;
 	};
 
-	Manager* create();  //define in application
+	Manager* create();  // implement on client
 
 }

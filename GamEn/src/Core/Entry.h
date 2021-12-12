@@ -10,8 +10,12 @@ int main(int argc, char** argv)
 	CC_WARN("Entry point");
 
 	auto app = GamEn::create();
-	app->run();
-	delete app;
+	if (app)
+	{
+		app->run();
+		delete app;
+	}
+
 	return 0;
 }
 

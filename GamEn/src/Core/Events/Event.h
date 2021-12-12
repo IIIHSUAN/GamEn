@@ -34,12 +34,14 @@ namespace GamEn {
 		EventCategoryMouseButton = BIT(4)
 	};
 
+#define BIND_FUNC(x) std::bind(&x, this, std::placeholders::_1)
+
 	class GE_API Event
 	{
 	public:
 		virtual ~Event() = default;
 
-		bool isPropagation = true;
+		bool isHandled = false;  // by EventHandler
 
 		// override
 		virtual EventType getType() const = 0;
@@ -65,7 +67,7 @@ namespace GamEn {
 		{
 			if (_event.getType() == T::getPrototype())
 			{
-				_event.isPropagation |= func(static_cast<T&>(_event));
+				_event.isHandled |= func(static_cast<T&>(_event));
 				return true;
 			}
 			return false;
