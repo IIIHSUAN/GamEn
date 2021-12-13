@@ -3,6 +3,7 @@
 
 #include "Core/Manager.h"
 
+#include "ref/OpenGL/imgui_impl_glfw.h"
 #include "ref/OpenGL/imgui_impl_opengl3.h"  // readyMade renderer
 #include <GLFW/glfw3.h>
 #include <Glad/glad.h>
@@ -11,140 +12,114 @@ namespace GamEn {
 
 	ImguiLayer::ImguiLayer() : Layer("Imgui Layer")
 	{
-		
+
 	}
 
 	void ImguiLayer::onAttach()
 	{
+		// Setup window
+		glfwSetErrorCallback([](int error, const char* description) {
+			fprintf(stderr, "Glfw Error %d: %s\n", error, description);
+		});
+		if (!glfwInit())
+			CC_ERR("glfwInit failed");
+
+	// Create window with graphics context
+		GLFWwindow* window = static_cast<GLFWwindow*>(Manager::get().getWindow().getNativeWindow());
+		if (window == NULL)
+			CC_ERR("failed");
+		glfwMakeContextCurrent(window);
+		glfwSwapInterval(1); // Enable vsync
+
+		// Setup Dear ImGui context
+		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
+		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
+		//io.ConfigViewportsNoAutoMerge = true;
+		//io.ConfigViewportsNoTaskBarIcon = true;
+
+		// Setup Dear ImGui style
 		ImGui::StyleColorsDark();
+		//ImGui::StyleColorsClassic();
 
-		ImGuiIO& io = ImGui::GetIO();
-		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors | ImGuiBackendFlags_HasSetMousePos;
+		// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
+		ImGuiStyle& style = ImGui::GetStyle();
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		{
+			style.WindowRounding = 0.0f;
+			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+		}
 
-		// tmp template only
-		io.KeyMap[ImGuiKey_Tab] = GLFW_KEY_TAB;
-		io.KeyMap[ImGuiKey_LeftArrow] = GLFW_KEY_LEFT;
-		io.KeyMap[ImGuiKey_RightArrow] = GLFW_KEY_RIGHT;
-		io.KeyMap[ImGuiKey_UpArrow] = GLFW_KEY_UP;
-		io.KeyMap[ImGuiKey_DownArrow] = GLFW_KEY_DOWN;
-		io.KeyMap[ImGuiKey_PageUp] = GLFW_KEY_PAGE_UP;
-		io.KeyMap[ImGuiKey_PageDown] = GLFW_KEY_PAGE_DOWN;
-		io.KeyMap[ImGuiKey_Home] = GLFW_KEY_HOME;
-		io.KeyMap[ImGuiKey_End] = GLFW_KEY_END;
-		io.KeyMap[ImGuiKey_Insert] = GLFW_KEY_INSERT;
-		io.KeyMap[ImGuiKey_Delete] = GLFW_KEY_DELETE;
-		io.KeyMap[ImGuiKey_Backspace] = GLFW_KEY_BACKSPACE;
-		io.KeyMap[ImGuiKey_Space] = GLFW_KEY_SPACE;
-		io.KeyMap[ImGuiKey_Enter] = GLFW_KEY_ENTER;
-		io.KeyMap[ImGuiKey_Escape] = GLFW_KEY_ESCAPE;
-		io.KeyMap[ImGuiKey_KeyPadEnter] = GLFW_KEY_KP_ENTER;
-		io.KeyMap[ImGuiKey_A] = GLFW_KEY_A;
-		io.KeyMap[ImGuiKey_C] = GLFW_KEY_C;
-		io.KeyMap[ImGuiKey_V] = GLFW_KEY_V;
-		io.KeyMap[ImGuiKey_X] = GLFW_KEY_X;
-		io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
-		io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
-		
-		ImGui_ImplOpenGL3_Init("#version 410 core");
+		// Setup Platform/Renderer backends
+		ImGui_ImplGlfw_InitForOpenGL(window, true);
+		ImGui_ImplOpenGL3_Init("#version 410");
+
+		io.Fonts->AddFontDefault();
 	}
 
 	void ImguiLayer::onDetach()
 	{
-	}
-
-	void GamEn::ImguiLayer::onUpdate()
-	{
-		ImGuiIO& io = ImGui::GetIO();
-		Manager& m = Manager::get();
-		io.DisplaySize = ImVec2(m.getWindow().getWidth(), m.getWindow().getHeight());
-
-		float time = glfwGetTime();
-		io.DeltaTime = _time > 0.0f ? time - _time : 1.0f / 60.0f;
-		_time = time;
-
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui::NewFrame();
-
-		static bool isVisible = true;
-		ImGui::ShowDemoWindow(&isVisible);
-
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
+		ImGui::DestroyContext();
 	}
 
 	void ImguiLayer::onEvent(Event & e)
 	{
-		EventHandler eHandler(e);
-
-		eHandler.dispatch<MouseButtonPressedEvent>(BIND_FUNC(ImguiLayer::bottonPress));
-		eHandler.dispatch<MouseButtonReleasedEvent>(BIND_FUNC(ImguiLayer::bottonRelease));
-		eHandler.dispatch<MouseMovedEvent>(BIND_FUNC(ImguiLayer::mouseMove));
-		eHandler.dispatch<MouseScrolledEvent>(BIND_FUNC(ImguiLayer::mouseScroll));
-
-		eHandler.dispatch<KeyPressedEvent>(BIND_FUNC(ImguiLayer::keyPress));
-		eHandler.dispatch<KeyReleasedEvent>(BIND_FUNC(ImguiLayer::keyRelease));
-		eHandler.dispatch<KeyTypedEvent>(BIND_FUNC(ImguiLayer::keyType));
-
-		eHandler.dispatch<WindowResizeEvent>(BIND_FUNC(ImguiLayer::windowResize));
+	}
+	
+	void ImguiLayer::begin()
+	{
+		// Start the Dear ImGui frame
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
 	}
 
-	bool ImguiLayer::bottonPress(MouseButtonPressedEvent & e)
+	void ImguiLayer::end()
 	{
-		ImGuiIO& io = ImGui::GetIO();
-		io.MouseDown[e.getMouseButton()] = true;
-		return false;
-	}
-	bool ImguiLayer::bottonRelease(MouseButtonReleasedEvent & e)
-	{
-		ImGuiIO& io = ImGui::GetIO();
-		io.MouseDown[e.getMouseButton()] = false;
-		return false;
-	}
-	bool ImguiLayer::mouseMove(MouseMovedEvent & e)
-	{
-		ImGuiIO& io = ImGui::GetIO();
-		io.MousePos = ImVec2(e.getX(), e.getY());
-		return false;
-	}
-	bool ImguiLayer::mouseScroll(MouseScrolledEvent & e)
-	{
-		ImGuiIO& io = ImGui::GetIO();
-		io.MouseWheel = e.getOffsetY();
-		io.MouseWheelH = e.getOffsetX();
-		return false;
-	}
-	bool ImguiLayer::keyPress(KeyPressedEvent & e)
-	{
-		ImGuiIO& io = ImGui::GetIO();
-		io.KeysDown[e.getKeyCode()] = true;
+		// Rendering
+		ImGui::Render();
+		int display_w, display_h;
+		GLFWwindow* window = static_cast<GLFWwindow*>(Manager::get().getWindow().getNativeWindow());
+		glfwGetFramebufferSize(window, &display_w, &display_h);
+		glViewport(0, 0, display_w, display_h);
+		//glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+		//glClear(GL_COLOR_BUFFER_BIT);
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-		io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
-		io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
-		io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
-		io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
-		return false;
-	}
-	bool ImguiLayer::keyRelease(KeyReleasedEvent & e)
-	{
+		// Update and Render additional Platform Windows
+		// (Platform functions may change the current OpenGL context, so we save/restore it to make it easier to paste this code elsewhere.
+		//  For this specific demo app we could also call glfwMakeContextCurrent(window) directly)
 		ImGuiIO& io = ImGui::GetIO();
-		io.KeysDown[e.getKeyCode()] = false;
-		return false;
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		{
+			GLFWwindow* backup_current_context = glfwGetCurrentContext();
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+			glfwMakeContextCurrent(backup_current_context);
+		}
 	}
-	bool ImguiLayer::keyType(KeyTypedEvent & e)
+
+	void ImguiLayer::onImguiRender()
 	{
-		ImGuiIO& io = ImGui::GetIO();
-		int key = e.getKeyCode();
-		if (key > 0 && key < 0x10000)
-			io.AddInputCharacter((USHORT)key);
-		return false;
+		static bool show_demo_window = true;
+		if (show_demo_window)
+			ImGui::ShowDemoWindow(&show_demo_window);
+
+		static bool show_another_window = false;
+		if (show_another_window)
+		{
+			ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+			ImGui::Text("Hello from another window!");
+			if (ImGui::Button("Close Me"))
+				show_another_window = false;
+			ImGui::End();
+		}
 	}
-	bool ImguiLayer::windowResize(WindowResizeEvent & e)
-	{
-		ImGuiIO& io = ImGui::GetIO();
-		io.DisplaySize = ImVec2(e.getWidth(), e.getHeight());
-		io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
-		glViewport(0, 0, e.getWidth(), e.getHeight());
-		return false;
-	}
+
 }

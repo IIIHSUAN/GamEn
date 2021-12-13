@@ -4,6 +4,13 @@
 #include <GLFW/glfw3.h>
 #include <Glad/glad.h>
 
+#include <glm/vec3.hpp> // glm::vec3
+#include <glm/vec4.hpp> // glm::vec4
+#include <glm/mat4x4.hpp> // glm::mat4
+#include <glm/ext/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale
+#include <glm/ext/matrix_clip_space.hpp> // glm::perspective
+#include <glm/ext/scalar_constants.hpp> // glm::pi
+
 namespace GamEn {
 
 	Manager* Manager::_manager = nullptr;
@@ -15,6 +22,9 @@ namespace GamEn {
 		_manager = this;
 		_window = std::unique_ptr<Window>(Window::create());
 		_window->setEventCallback(BIND_FUNC(Manager::onEvent));  // bind callback func ptr from Window to Manager (where implement)
+	
+		_imguiLayer = new ImguiLayer();
+		layer_push_back(_imguiLayer);
 	}
 	Manager::~Manager() {}
 
@@ -27,6 +37,11 @@ namespace GamEn {
 
 			for (Layer* layer : _layerStack)
 				layer->onUpdate();
+
+			_imguiLayer->begin();
+			for(Layer* layer:_layerStack)
+				layer->onImguiRender();
+			_imguiLayer->end();
 
 			_window->onUpdate();
 		}

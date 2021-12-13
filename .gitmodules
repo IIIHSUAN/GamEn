@@ -7,3 +7,6 @@
 [submodule "GamEn/module/imgui"]
 	path = GamEn/module/imgui
 	url = https://github.com/TheCherno/imgui/
+[submodule "GamEn/module/glm"]
+	path = GamEn/module/glm
+	url = https://github.com/g-truc/glm

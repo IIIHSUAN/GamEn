@@ -15,24 +15,16 @@ namespace GamEn {
 		ImguiLayer();
 		~ImguiLayer() = default;
 
-		virtual void onAttach();
+		virtual void onAttach() override;
 		virtual void onDetach() override;
-		void onUpdate() override;
-		void onEvent(Event& e) override;
+		virtual void onEvent(Event& e) override;
+
+		virtual void onImguiRender() override;
+
+		void begin();
+		void end();
 	private:
 		float _time = 0.0f;
-
-		// event callback for imgui
-		bool bottonPress(MouseButtonPressedEvent& e);
-		bool bottonRelease(MouseButtonReleasedEvent& e);
-		bool mouseMove(MouseMovedEvent& e);
-		bool mouseScroll(MouseScrolledEvent& e);
-
-		bool keyPress(KeyPressedEvent& e);
-		bool keyRelease(KeyReleasedEvent& e);
-		bool keyType(KeyTypedEvent& e);
-
-		bool windowResize(WindowResizeEvent& e);
 	};
 
 }

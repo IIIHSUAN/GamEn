@@ -18,6 +18,7 @@ myIncludeDir = {}
 myIncludeDir["GLFW"] = "GamEn/module/GLFW/include"
 myIncludeDir["Glad"] = "GamEn/module/Glad/include"
 myIncludeDir["ImGui"] = "GamEn/module/imgui"
+--myIncludeDir["glm"] = "GamEn/module/glm"
 
 include "GamEn/module/GLFW"  -- GLFW project insert here
 include "GamEn/module/Glad"  -- Glad project
@@ -37,7 +38,9 @@ project "GamEn"
     files
     {
         "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp",
+        "%{prj.name}/module/glm/glm/**.hpp",
+        "%{prj.name}/module/glm/glm/**.inl"
     }
     includedirs
     {
@@ -45,7 +48,8 @@ project "GamEn"
         "%{prj.name}/src",
         "%{myIncludeDir.GLFW}",
         "%{myIncludeDir.Glad}",
-        "%{myIncludeDir.ImGui}"
+        --"%{myIncludeDir.ImGui}",
+        "%{myIncludeDir.glm}"
     }
     links
     {

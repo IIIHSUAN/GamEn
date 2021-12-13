@@ -26,7 +26,6 @@ public:
 	Tester()
 	{
 		layer_push_front(new myLayer());
-		layer_push_back(new GamEn::ImguiLayer());
 	}
 	~Tester() = default;
 };

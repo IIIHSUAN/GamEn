@@ -16,6 +16,8 @@ namespace GamEn {
 		virtual void onUpdate() {}
 		virtual void onEvent(Event& e) {}
 
+		virtual void onImguiRender() {}
+
 		inline const std::string& getName() const { return _layerName; }
 	private:
 		std::string _layerName;

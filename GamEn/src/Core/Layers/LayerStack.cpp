@@ -5,7 +5,6 @@ namespace GamEn {
 
 	LayerStack::LayerStack()
 	{
-		_mid_ptr = _layers.begin();
 	}
 	LayerStack::~LayerStack()
 	{
@@ -16,7 +15,7 @@ namespace GamEn {
 
 	void GamEn::LayerStack::push_front(Layer * layer)
 	{
-		_mid_ptr = _layers.emplace(_mid_ptr, layer);
+		_layers.emplace(_layers.begin() + (_mid_layer_ind++), layer);
 	}
 	void GamEn::LayerStack::push_back(Layer * layer)
 	{
@@ -28,7 +27,7 @@ namespace GamEn {
 		auto it = std::find(_layers.begin(), _layers.end(), layer);
 
 		if (it != _layers.end())
-			_layers.erase(it), _mid_ptr--;
+			_layers.erase(it), _mid_layer_ind--;
 	}
 	void GamEn::LayerStack::pop_back(Layer * layer)
 	{

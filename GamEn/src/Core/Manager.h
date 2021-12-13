@@ -5,6 +5,7 @@
 #include "Core/IO/Input.h"
 #include "Core/Events/Event.h"
 #include "Core/Layers/LayerStack.h"
+#include "Core/Layers/Imgui/ImguiLayer.h"
 
 namespace GamEn {
 
@@ -30,8 +31,12 @@ namespace GamEn {
 		bool onWindowResize(WindowResizeEvent& e);
 
 		std::unique_ptr<Window> _window;
+		ImguiLayer* _imguiLayer;
+
 		bool _isRun = true;
 		LayerStack _layerStack;
+
+		std::thread _rander_thr, _update_thr;
 	};
 
 	Manager* create();  // implement on client
